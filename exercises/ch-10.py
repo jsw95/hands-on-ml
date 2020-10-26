@@ -25,9 +25,20 @@ print(model.summary())
 model.compile(loss="sparse_categorical_crossentropy",
               optimizer=keras.optimizers.SGD(learning_rate=0.01),
               metrics=["accuracy"])
-history = model.fit(X_train, y_train, epochs=30, validation_data=(X_valid, y_valid))
+history = model.fit(X_train, y_train, epochs=1, validation_data=(X_valid, y_valid))
 
 pd.DataFrame(history.history).plot(figsize=(8, 5))
 plt.grid(True)
 plt.gca().set_ylim(0, 1) # set the vertical range to [0-1]
 plt.show()
+
+X_new = X_test[0]
+y_pred = model.predict_classes(X_new.reshape(-1, 28, 28))
+
+prediction = class_names[y_pred]
+print(prediction)
+
+plt.imshow(X_new)
+plt.show()
+
+# success
